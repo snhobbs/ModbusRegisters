@@ -19,7 +19,7 @@ namespace Modbus {
 class DataStore {
  protected:
   static const std::size_t kByteSize = 8;
-  static const std::size_t kAddressStart = 0x0;
+  static const size_t kAddressStart = 0x00;
 
  public:
   static constexpr std::size_t GetAddressStart(void) { return kAddressStart; }

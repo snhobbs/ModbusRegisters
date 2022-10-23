@@ -327,6 +327,7 @@ class HoldingRegisterController {
     const uint16_t register_setting =
         WriteSingleHoldingRegisterCommand::ReadSetting(frame.data_array);
     WriteRegister(address, register_setting);
+    register_data_->set_register_callback(address, register_setting);
     WriteSingleHoldingRegisterCommand::FillResponseHeader(
         frame.address, address, register_setting, response);
     return 0;
@@ -363,6 +364,7 @@ class HoldingRegisterController {
     const ArrayView<const uint8_t> data_view{register_count*sizeof(uint16_t), 
       &frame.data_array[WriteMultipleHoldingRegistersCommand::CommandPacket::kValueStart]};
     register_data_->SetRegisters(address, register_count, data_view);
+    register_data_->set_registers_callback(address, register_count, data_view);
     return 0;
   }
 

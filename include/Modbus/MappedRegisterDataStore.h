@@ -14,7 +14,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
-#include <utility>
+#include <utility>  //  std::pair
 
 template <typename T> struct Equal_UnaryPredicate {
   const T d_;
@@ -43,11 +43,11 @@ template <typename T> struct IdentifierMemoryMapEntry {
 
 template<typename T>
 inline size_t get_matching_index(const T& value, const std::pair<const T*, size_t>& collection) {
-	/*
-	 * Cycle through the buffer, check if the value matches, if it does, return the index.
-	 * Return length of buffer if unfound.
-	 * */
-	size_t i=0;
+  /*
+   * Cycle through the buffer, check if the value matches, if it does, return the index.
+   * Return length of buffer if unfound.
+   * */
+  size_t i=0;
     for (i=0; i< collection.second; i++) {
       if (collection.first[i] == value) {
         break;
@@ -57,21 +57,21 @@ inline size_t get_matching_index(const T& value, const std::pair<const T*, size_
 }
 
 inline bool check_location_valid(std::size_t address, std::size_t count,
-		const std::pair<const size_t*, size_t>& offsets,
-		const std::pair<const size_t*, size_t>& end_points) {
+    const std::pair<const size_t*, size_t>& offsets,
+    const std::pair<const size_t*, size_t>& end_points) {
   /*
    * Arguments:
-   * 	+ address : start location
-   * 	+ count : number of registers
+   *  + address : start location
+   *  + count : number of registers
    *
-   * 	Only for complete writes of registers. Allow a write if the address is
+   *  Only for complete writes of registers. Allow a write if the address is
    * in start positions and the end point of address + count is in end points
    * */
   const bool valid = std::any_of(offsets.first,
-		  	  	  	  	  	  	 offsets.first+offsets.second,
+                             offsets.first+offsets.second,
                                  Equal_UnaryPredicate(address)) &
                      std::any_of(end_points.first,
-                    		 	 end_points.first+end_points.second,
+                           end_points.first+end_points.second,
                                  Equal_UnaryPredicate(address + count - 1));
   return valid;
 }
@@ -88,12 +88,18 @@ public:
     /*
      * Returns the index of the matching address. Returns 0 otherwise.
      * */
-	const auto index = get_matching_index(address, {memory_controller_->offsets_.cbegin(), memory_controller_->offsets_.size()});
-	return (index == memory_controller_->offsets_.size()) ? 0: index;
+  const auto index = get_matching_index(address, {memory_controller_->offsets_.cbegin(), memory_controller_->offsets_.size()});
+  return (index == memory_controller_->offsets_.size()) ? 0: index;
   }
 
   bool IsNewData(void) const { return new_data_; }
   void SetNewData(bool value) { new_data_ = value; }
+  void SetField(const std::size_t identifier,
+                const std::pair<const uint8_t*, size_t> &data_view) {
+    SetNewData(true);
+    memory_controller_->SetField(identifier, data_view.first,
+        data_view.second);
+  }
   void SetField(const std::size_t identifier,
                 const ArrayView<const uint8_t> &data_view) {
     SetNewData(true);
@@ -124,15 +130,15 @@ public:
   bool WriteLocationValid(std::size_t address, std::size_t count) const {
     /*
      * Arguments:
-     * 	+ address : start location
-     * 	+ count : number of registers
+     *  + address : start location
+     *  + count : number of registers
      *
-     * 	Only for complete writes of registers. Allow a write if the address is
+     *  Only for complete writes of registers. Allow a write if the address is
      * in start positions and the end point of address + count is in end points
      * */
     const bool valid = check_location_valid(address, count,
-    		{memory_controller_->offsets_.cbegin(), memory_controller_->offsets_.size()},
-    		{memory_controller_->end_points_.cbegin(), memory_controller_->end_points_.size()});
+        {memory_controller_->offsets_.cbegin(), memory_controller_->offsets_.size()},
+        {memory_controller_->end_points_.cbegin(), memory_controller_->end_points_.size()});
     return valid;
   }
 
