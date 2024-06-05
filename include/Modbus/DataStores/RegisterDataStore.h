@@ -75,6 +75,10 @@ class UpdatingRegisterDataStore : public RegisterDataStore {
   UpdatingRegisterDataStore(uint16_t* data, const size_t length, bool* flags) :
     RegisterDataStore{data, length}, flags_{flags, length}{}
 
+    bool flag_set(const std::size_t address) const {
+      return flags_.first[std::min(address, flags_.second-1)];
+    }
+
     void set_register_callback(std::size_t address, uint16_t) {
       flags_.first[GetIndex(address)] = true;
     }
