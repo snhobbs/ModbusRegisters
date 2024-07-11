@@ -2,7 +2,7 @@
  * ----------------------------------------------------------------------
  * Project:      Modbus
  * Title:        DataStore.h
- * Description:  Default data stores for bits and registers 
+ * Description:  Default data stores for bits and registers
  *
  * $Date:        13. May 2020
  * $Revision:    V.1.0.1
@@ -14,7 +14,6 @@
 #define MODBUS_DATASTORE_H_
 #include <cstdint>
 
-
 namespace Modbus {
 class DataStore {
  protected:
@@ -25,6 +24,6 @@ class DataStore {
   static constexpr std::size_t GetAddressStart(void) { return kAddressStart; }
 };
 
-}
+}  // namespace Modbus
 
 #endif  // MODBUS_DATASTORE_H_

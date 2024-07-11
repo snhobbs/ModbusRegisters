@@ -2,6 +2,7 @@
 
 #include <Modbus/DataStore.h>
 #include <Modbus/MappedRegisterDataStore.h>
+
 #include <algorithm>
 #include <array>
 #include <cstdint>
@@ -83,7 +84,7 @@ class DataMap {
                sizeof(MemoryMap::int6422)},
   };
 
-private:
+ private:
   static constexpr std::size_t GetMemoryMapEntryIndex(std::size_t address) {
     for (std::size_t i = 0; i < memory_entries_.size(); i++) {
       if (address >= memory_entries_[i].offset) {
@@ -93,264 +94,268 @@ private:
     return 0;
   }
 
-public:
+ public:
   void SetField(MemoryMapEntryIdentifier identifier,
                 const ArrayView<const uint8_t> &data_view) {
     switch (identifier) {
-    case (MemoryMapEntryIdentifier::unknown): {
-      // Ignore this case, should be scrubed
-      break;
-    }
-    case (MemoryMapEntryIdentifier::str): {
-      for (std::size_t i = 0;
-           i < std::min(sizeof(data_bank_.str), data_view.size()); i++) {
-        data_bank_.str[i] = data_view[i];
+      case (MemoryMapEntryIdentifier::unknown): {
+        // Ignore this case, should be scrubed
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int32): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint32_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int32 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int641): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int641 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int642): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int642 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int643): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int643 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int644): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int644 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int645): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int645 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int646): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int646 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int647): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int647 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int648): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int648 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int649): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int649 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int640): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int640 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int6411): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int6411 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int6412): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int6412 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int6413): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int6413 = value;
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int6422): {
-      const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
-          data_view.data(), data_view.size());
-      data_bank_.int6422 = value;
-      break;
-    }
-    default: { assert(0); }
+      case (MemoryMapEntryIdentifier::str): {
+        for (std::size_t i = 0;
+             i < std::min(sizeof(data_bank_.str), data_view.size()); i++) {
+          data_bank_.str[i] = data_view[i];
+        }
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int32): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint32_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int32 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int641): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int641 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int642): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int642 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int643): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int643 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int644): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int644 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int645): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int645 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int646): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int646 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int647): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int647 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int648): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int648 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int649): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int649 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int640): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int640 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int6411): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int6411 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int6412): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int6412 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int6413): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int6413 = value;
+        break;
+      }
+      case (MemoryMapEntryIdentifier::int6422): {
+        const auto value = Utilities::Make_LSB_IntegerTypeFromU8Array<uint64_t>(
+            data_view.data(), data_view.size());
+        data_bank_.int6422 = value;
+        break;
+      }
+      default: {
+        assert(0);
+      }
     }
   }
   void GetField(MemoryMapEntryIdentifier identifier,
                 ArrayView<uint8_t> *data_view) const {
     switch (identifier) {
-    case (MemoryMapEntryIdentifier::unknown): {
-      // Ignore this case, should be scrubed
-      break;
-    }
-    case (MemoryMapEntryIdentifier::str): {
-      for (std::size_t i = 0;
-           i < std::min(sizeof(data_bank_.str), data_view->size()); i++) {
-        data_view->at(i) = data_bank_.str[i];
+      case (MemoryMapEntryIdentifier::unknown): {
+        // Ignore this case, should be scrubed
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int32): {
-      const auto value = data_bank_.int32;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::str): {
+        for (std::size_t i = 0;
+             i < std::min(sizeof(data_bank_.str), data_view->size()); i++) {
+          data_view->at(i) = data_bank_.str[i];
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int641): {
-      const auto value = data_bank_.int641;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int32): {
+        const auto value = data_bank_.int32;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int642): {
-      const auto value = data_bank_.int642;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int641): {
+        const auto value = data_bank_.int641;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int643): {
-      const auto value = data_bank_.int643;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int642): {
+        const auto value = data_bank_.int642;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int644): {
-      const auto value = data_bank_.int644;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int643): {
+        const auto value = data_bank_.int643;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int645): {
-      const auto value = data_bank_.int645;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int644): {
+        const auto value = data_bank_.int644;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int646): {
-      const auto value = data_bank_.int646;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int645): {
+        const auto value = data_bank_.int645;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int647): {
-      const auto value = data_bank_.int647;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int646): {
+        const auto value = data_bank_.int646;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int648): {
-      const auto value = data_bank_.int648;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int647): {
+        const auto value = data_bank_.int647;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int649): {
-      const auto value = data_bank_.int649;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int648): {
+        const auto value = data_bank_.int648;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int640): {
-      const auto value = data_bank_.int640;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int649): {
+        const auto value = data_bank_.int649;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int6411): {
-      const auto value = data_bank_.int6411;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int640): {
+        const auto value = data_bank_.int640;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int6412): {
-      const auto value = data_bank_.int6412;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int6411): {
+        const auto value = data_bank_.int6411;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int6413): {
-      const auto value = data_bank_.int6413;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int6412): {
+        const auto value = data_bank_.int6412;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    case (MemoryMapEntryIdentifier::int6422): {
-      const auto value = data_bank_.int6422;
-      const auto array = Utilities::MakeLSBU8Array(value);
-      for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
-           i++) {
-        data_view->at(i) = array.at(i);
+      case (MemoryMapEntryIdentifier::int6413): {
+        const auto value = data_bank_.int6413;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
       }
-      break;
-    }
-    default: { assert(0); }
+      case (MemoryMapEntryIdentifier::int6422): {
+        const auto value = data_bank_.int6422;
+        const auto array = Utilities::MakeLSBU8Array(value);
+        for (std::size_t i = 0; i < std::min(array.size(), data_view->size());
+             i++) {
+          data_view->at(i) = array.at(i);
+        }
+        break;
+      }
+      default: {
+        assert(0);
+      }
     }
   }
   ArrayView<const uint8_t> get_str(void) const {
@@ -392,10 +397,10 @@ public:
   uint64_t get_int6422(void) const { return GetDataBank().int6422; }
   void set_int6422(uint64_t value) { GetDataBank().int6422 = value; }
 
-public:
+ public:
   static std::size_t size(void) { return sizeof(MemoryMap); }
-  static MemoryMapEntryIdentifier
-  GetIdentifierFromAddress(std::size_t address) {
+  static MemoryMapEntryIdentifier GetIdentifierFromAddress(
+      std::size_t address) {
     const auto &entry = memory_entries_.at(GetMemoryMapEntryIndex(address));
     if (entry.offset != address) {
       return MemoryMapEntryIdentifier::unknown;
